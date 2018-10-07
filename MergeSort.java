@@ -5,14 +5,14 @@ import java.util.Arrays;
 public class MergeSort {
 
 
-	public static void mergesort(int[] array) {
+public static void mergesort(int[] array) {
 	
-
-		 mergesort(array, new int[array.length], 0, array.length-1);	
-	}
+ mergesort(array, new int[array.length], 0, array.length-1);	
 	
-   public static void mergesort(int[] array ,int[] temp, int leftStart, int rightEnd)
-   {
+}
+	
+public static void mergesort(int[] array ,int[] temp, int leftStart, int rightEnd)
+{
    	if(leftStart >= rightEnd) {
    		return;
    	}
@@ -24,10 +24,9 @@ public class MergeSort {
    	System.out.println(Arrays.toString(array));
 
     
-   	
-   }
+}
    
-   public static void mergehalves(int[] array, int[] temp, int leftStart, int rightEnd) {
+public static void mergehalves(int[] array, int[] temp, int leftStart, int rightEnd) {
    	int leftEnd=(rightEnd+ leftStart)/2;
    	int rightStart = leftEnd+1;
    	int size= rightEnd-leftStart+1;
@@ -64,15 +63,14 @@ public class MergeSort {
    		 System.out.println(count);
    	 }
 
-	}
-   public static void main(String[] args) 
-   {
+	}//while
+public static void main(String[] args) {
 	   int [ ] num = {1,9,8,2,0,0,0};
 	   mergesort(num);
 	 
 	  
-   }
-	}
+ }
+}
 
 
 
