@@ -1,0 +1,135 @@
+import java.util.Scanner;
+
+public class prob2solsathyaramv {
+
+		public static void main(String[] args) {
+			
+			// TODO Auto-generated method stub
+			System.out.println("Please enter size of array");
+	        Scanner in = new Scanner(System.in);
+			int size = in.nextInt();
+			System.out.println("The size you entered is " + size);
+			int[] a = new int[size];
+			System.out.println("Enter the array: ");
+			
+
+			int j = 0;
+			while (j < size) {
+			    System.out.print("Enter "+ (j+1) + ": ");
+			    a[j] = in.nextInt();     // getting input array
+			    ++j;
+			}
+			System.out.println("Please enter the number to compare with median");
+			int number= in.nextInt(); 
+
+
+			in.close();
+		        
+			int start = 0;
+			int n = a.length;
+			if(n==1) 
+				System.out.println("Theres only one Element");
+
+			if(n!=1)
+			{
+			 //System.out.println("After dup" + Arrays.toString(a));
+			RandomizedQuickSort(a, 0, n-1); // Randomized Quick sort- O(nlogn) regardless of the input
+		    n = removeDuplicates(a, n); //after sorting, removing duplicate elements (if any), new array with 
+		                                //non repeating elements is assigned
+	        int end=n-1;
+			double output = findMedian(a, number, start, end, n);// finding, comparing and producing output max length
+			System.out.println("Longest Substring is" + " " + (output));
+			}
+
+		}
+
+		public static int removeDuplicates(int arr[], int p) 
+	    { 
+	        if (p == 0 || p == 1) 
+	            return p; 
+	       
+	        // To store index of next unique element 
+	        int j = 0; 
+	       
+	        // Just maintaining another updated index - j 
+	        for (int i = 0; i < p-1; i++) 
+	            if (arr[i] != arr[i+1] ) 
+	                arr[j++] = arr[i]; 
+	                	
+	        arr[j++] = arr[p-1]; 
+	       
+	        return j; 
+	    } 
+		public static void removeElement(int[] array, int removedIdx) {
+		    System.arraycopy(array, removedIdx, array, removedIdx, array.length -1 - removedIdx);
+		}
+
+		public static void RandomizedQuickSort(int[] array, int startIndex, int endIndex) {
+			if (startIndex < endIndex) {
+				int pivot = randomizedPartition(array, startIndex, endIndex); // randomized pivot element
+				RandomizedQuickSort(array, startIndex, pivot - 1); // between 0(usually) till pivot-1
+				RandomizedQuickSort(array, pivot + 1, endIndex); // between pivot+1 and endindex-1
+			}
+		}
+
+		public static int randomizedPartition(int[] array, int startIndex, int endIndex) {
+			int randomEndIndex = randomNumberBetween(startIndex, endIndex);// random index generator
+			swap(array, endIndex, randomEndIndex); // swap- randomend index and real end index
+			return partition(array, startIndex, endIndex);
+		}
+
+		public static int randomNumberBetween(int startNumber, int endNumber) {
+			return (int) Math.floor(Math.random() * (endNumber - startNumber + 1) + startNumber);// floor function - closest
+																									// integer
+		}
+
+		public static int partition(int[] array, int startIndex, int endIndex) {
+			int pivotValue = array[endIndex];
+			int pivotIndex = startIndex;
+
+			for (int j = startIndex; j < endIndex; j++) {
+				if (array[j] <= pivotValue) { // check if element is less than pivot value
+					swap(array, pivotIndex, j);// if yes, swap
+					pivotIndex = pivotIndex + 1; // increasing pivot index
+				}
+			}
+			swap(array, pivotIndex, endIndex);
+			return pivotIndex;
+		}
+
+		public static void swap(int[] array, int firstIndex, int secondIndex) {// swapping
+			int temp = array[firstIndex];
+			array[firstIndex] = array[secondIndex];
+			array[secondIndex] = temp;
+		}
+
+		private static double findMedian(int[] a, int x, int start, int end, int length) {
+			// TODO Auto-generated method stub
+			double median = 0;
+
+			for (int i = start; i <= end; i++) {
+
+				if (length % 2 != 0) {
+					median = a[length / 2];
+				} else {
+					median = (a[(length / 2)] + a[(length / 2) - 1]) / 2.0;
+				}
+
+				if (median < x) {//if condition not satisfied
+					start++; //increase lower bound
+					int[] result = new int[length - 1]; 
+					for (int j = 0; j < result.length; j++) {
+						result[j] = a[j + 1]; //assign all elements to new array except first one(windowing)
+					}
+					median = findMedian(result, x, start, end, result.length);//recursion if not found
+					break;
+				} else {
+					return a.length; 
+			}
+			
+		}
+			return median;
+		
+	}
+
+}
